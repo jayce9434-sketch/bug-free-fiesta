@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0a1310">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+<title>UNDERLEAF: Night Shift</title>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brandBlock"><div class="brandMark">UL</div><div><div class="brand">UNDERLEAF</div><div class="subtitle">NIGHT SHIFT</div></div></div>
+    <div class="resourceStrip">
+      <div class="resource"><span class="resourceLabel">SAP</span><strong id="sapValue">0</strong></div>
+      <div class="resource"><span class="resourceLabel">AMBER</span><strong id="amberValue">0</strong></div>
+      <div class="resource"><span class="resourceLabel">RANK</span><strong id="rankValue">1</strong></div>
+    </div>
+  </header>
+
+  <main id="screenHome" class="screen active">
+    <section class="heroPanel">
+      <div class="heroCopy">
+        <div class="eyebrow">FIELD OPERATIONS</div>
+        <h1>Every run is a different night.</h1>
+        <p>Choose a specialist, take a contract, improvise around predators and hazards, then get back to the nest alive.</p>
+        <div class="heroActions">
+          <button id="quickLaunch" class="primary">Launch Selected Contract</button>
+          <button id="rerollContracts" class="secondary">Refresh Contracts</button>
+        </div>
+      </div>
+      <div id="selectedBugPreview" class="bugPreview"></div>
+    </section>
+
+    <section class="dashboardGrid">
+      <div class="panel span2">
+        <div class="panelHeader"><div><div class="eyebrow">TONIGHT'S BOARD</div><h2>Contracts</h2></div><div id="boardStamp" class="stamp"></div></div>
+        <div id="contractGrid" class="contractGrid"></div>
+      </div>
+      <div class="panel">
+        <div class="panelHeader"><div><div class="eyebrow">SPECIALIST</div><h2>Current Bug</h2></div></div>
+        <div id="currentBugCard"></div>
+      </div>
+      <div class="panel">
+        <div class="panelHeader"><div><div class="eyebrow">DAILY</div><h2>Night Cache</h2></div></div>
+        <div id="dailyCard" class="dailyCard"></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="screenBugs" class="screen">
+    <section class="sectionIntro"><div><div class="eyebrow">SPECIALISTS</div><h1>Choose how you play.</h1><p>Each bug changes movement, detection, and the way you solve objectives.</p></div></section>
+    <div id="bugGrid" class="cardGrid"></div>
+  </main>
+
+  <main id="screenLab" class="screen">
+    <section class="sectionIntro"><div><div class="eyebrow">PERMANENT UPGRADES</div><h1>The Field Lab</h1><p>Improve fundamentals without turning missions into idle grinding.</p></div></section>
+    <div id="labGrid" class="cardGrid labGrid"></div>
+  </main>
+
+  <main id="screenPins" class="screen">
+    <section class="sectionIntro"><div><div class="eyebrow">FIELD RECORD</div><h1>Pattern Chips</h1><p>Visual trails and auras earned from feats, not random rolls.</p></div></section>
+    <div id="pinGrid" class="cardGrid pinGrid"></div>
+  </main>
+
+  <main id="screenSettings" class="screen">
+    <section class="sectionIntro"><div><div class="eyebrow">SYSTEM</div><h1>Settings</h1><p>Audio, save tools, accessibility, and the test vault.</p></div></section>
+    <div class="settingsGrid">
+      <section class="panel"><div class="panelHeader"><h2>Audio</h2></div>
+        <label class="settingRow"><span>Master</span><input id="masterVolume" type="range" min="0" max="20000" step="100"><b id="masterReadout"></b></label>
+        <label class="settingRow"><span>Music</span><input id="musicVolume" type="range" min="0" max="20000" step="100"><b id="musicReadout"></b></label>
+        <label class="settingRow"><span>SFX</span><input id="sfxVolume" type="range" min="0" max="20000" step="100"><b id="sfxReadout"></b></label>
+      </section>
+      <section class="panel"><div class="panelHeader"><h2>Gameplay</h2></div>
+        <label class="toggleRow"><span>Screen shake</span><input id="shakeToggle" type="checkbox"></label>
+        <label class="toggleRow"><span>High contrast objectives</span><input id="contrastToggle" type="checkbox"></label>
+        <label class="toggleRow"><span>Reduced motion</span><input id="motionToggle" type="checkbox"></label>
+      </section>
+      <section class="panel span2"><div class="panelHeader"><div><div class="eyebrow">DEVELOPER</div><h2>Test Vault</h2></div></div>
+        <div class="vaultGrid">
+          <div class="vaultRow"><span>Sap</span><input id="vaultSap" type="number" value="1000"><button data-vault="sap" data-mode="add">ADD</button><button data-vault="sap" data-mode="set">SET</button></div>
+          <div class="vaultRow"><span>Amber</span><input id="vaultAmber" type="number" value="25"><button data-vault="amber" data-mode="add">ADD</button><button data-vault="amber" data-mode="set">SET</button></div>
+          <div class="vaultRow"><span>XP</span><input id="vaultXp" type="number" value="500"><button data-vault="xp" data-mode="add">ADD</button><button data-vault="xp" data-mode="set">SET</button></div>
+        </div>
+      </section>
+      <section class="panel span2"><div class="panelHeader"><h2>Save Data</h2></div>
+        <div class="saveActions"><button id="exportSave">Export Save</button><button id="importSave">Import Save</button><button id="resetSave" class="danger">Reset Data</button></div>
+        <textarea id="saveBox" spellcheck="false" placeholder="Exported save appears here. Paste a save here before importing."></textarea>
+      </section>
+    </div>
+  </main>
+
+  <nav class="bottomNav">
+    <button data-screen="Home" class="active"><span class="navIcon">01</span><span>Board</span></button>
+    <button data-screen="Bugs"><span class="navIcon">02</span><span>Bugs</span></button>
+    <button data-screen="Lab"><span class="navIcon">03</span><span>Lab</span></button>
+    <button data-screen="Pins"><span class="navIcon">04</span><span>Chips</span></button>
+    <button data-screen="Settings"><span class="navIcon">05</span><span>System</span></button>
+  </nav>
+</div>
+
+<div id="missionLayer" class="missionLayer hidden">
+  <div class="missionTop">
+    <div><div id="missionType" class="eyebrow"></div><h2 id="missionTitle"></h2></div>
+    <div class="missionStats"><div><span>TIME</span><b id="timeLeft">0:00</b></div><div><span>HEALTH</span><b id="healthReadout">100</b></div><div><span>OBJECTIVE</span><b id="objectiveReadout">0/0</b></div></div>
+    <button id="missionExit" class="ghost">Abort</button>
+  </div>
+  <div class="missionObjective" id="missionObjective"></div>
+  <canvas id="gameCanvas"></canvas>
+  <div id="desktopHint" class="desktopHint">Move: WASD / Arrow Keys &nbsp;&nbsp; Ability: Space &nbsp;&nbsp; Burst: Shift</div>
+  <div id="joystick" class="joystick"><div id="stick" class="stick"></div></div>
+  <button id="abilityButton" class="abilityButton"><span id="abilityName">ABILITY</span><small id="abilityCooldown">READY</small></button>
+  <button id="burstButton" class="burstButton"><span>BURST</span><small id="burstCooldown">READY</small></button>
+</div>
+
+<div id="resultModal" class="modal hidden"><div class="modalCard"><div id="resultKicker" class="eyebrow"></div><h2 id="resultTitle"></h2><p id="resultText"></p><div id="resultRewards" class="resultRewards"></div><button id="resultClose" class="primary">Return to Board</button></div></div>
+<div id="toast" class="toast"></div>
+<script src="game.js"></script>
+</body>
+</html>
